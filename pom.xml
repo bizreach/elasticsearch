@@ -1357,11 +1357,6 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
         </profile>
         <profile>
             <id>release</id>
-            <properties>
-                <package.rpm>true</package.rpm>
-                <no.commit.pattern>\bno(n|)(release|commit)\b</no.commit.pattern> <!-- check for no-commit / no-release -->
-                <forbidden.test.signatures>org.apache.lucene.util.LuceneTestCase$AwaitsFix @ Please fix all bugs before release or mark them as ignored</forbidden.test.signatures>
-            </properties>
             <build>
                 <!-- sign the artifacts with GPG -->
                 <plugins>
@@ -1376,11 +1371,6 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
-                                <configuration>
-                                    <keyname>${gpg.key}</keyname>
-                                    <passphrase>${gpg.passphrase}</passphrase>
-                                    <defaultKeyring>${gpg.keyring}</defaultKeyring>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -1554,4 +1544,14 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
         <module>plugins</module>
         <module>qa</module>
     </modules>
+    <distributionManagement>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
