@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.elasticsearch</groupId>
+    <groupId>jp.co.bizreach</groupId>
     <artifactId>parent</artifactId>
-    <version>2.3.5</version>
+    <version>2.3.5.1</version>
     <packaging>pom</packaging>
     <name>Elasticsearch: Parent POM</name>
     <description>Parent POM</description>
@@ -503,10 +503,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                 </plugin>
+                <!--
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-remote-resources-plugin</artifactId>
                 </plugin>
+                -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -852,6 +854,7 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!--
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-remote-resources-plugin</artifactId>
@@ -862,7 +865,6 @@
                             <resourceBundle>org.elasticsearch:rest-api-spec:${elasticsearch.version}</resourceBundle>
                         </resourceBundles>
                         <outputDirectory>${elasticsearch.tools.directory}</outputDirectory>
-                        <!-- don't include dev-tools in artifacts -->
                         <attachToMain>false</attachToMain>
                         <attachToTest>false</attachToTest>
                     </configuration>
@@ -874,6 +876,7 @@
                         </execution>
                     </executions>
                 </plugin>
+                -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -1536,13 +1539,17 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
         </profile>
     </profiles>
     <modules>
+        <!--
         <module>dev-tools</module>
         <module>rest-api-spec</module>
+        -->
         <module>core</module>
+        <!--
         <module>modules</module>
         <module>distribution</module>
         <module>plugins</module>
         <module>qa</module>
+        -->
     </modules>
     <distributionManagement>
         <repository>
