@@ -323,11 +323,6 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
-                        <!-- Don't run the license checker in core -->
-                        <id>check-license</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
                         <id>set-doclint-all</id>
                         <phase>validate</phase>
                         <goals>
@@ -372,23 +367,6 @@
                    <exclude>org/apache/lucene/**</exclude>
                  </excludes>
                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <!-- Guice -->
-                        <exclude>src/main/java/org/elasticsearch/common/inject/**</exclude>
-                        <!-- Forks of Lucene classes -->
-                        <exclude>src/main/java/org/apache/lucene/**/X*.java</exclude>
-                        <!-- netty pipelining -->
-                        <exclude>src/main/java/org/elasticsearch/http/netty/pipelining/**</exclude>
-                        <!-- Joda -->
-                        <exclude>src/main/java/org/joda/time/base/BaseDateTime.java</exclude>
-                        <exclude>src/main/java/org/joda/time/format/StrictISODateTimeFormat.java</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
       </pluginManagement>

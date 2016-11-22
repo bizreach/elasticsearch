@@ -503,19 +503,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                 </plugin>
-                <!--
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-remote-resources-plugin</artifactId>
-                </plugin>
-                -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>animal-sniffer-maven-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>de.thetaphi</groupId>
-                    <artifactId>forbiddenapis</artifactId>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -854,29 +844,6 @@
                         </execution>
                     </executions>
                 </plugin>
-                <!--
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-remote-resources-plugin</artifactId>
-                    <version>1.5</version>
-                    <configuration>
-                        <resourceBundles>
-                            <resourceBundle>org.elasticsearch:dev-tools:${elasticsearch.version}</resourceBundle>
-                            <resourceBundle>org.elasticsearch:rest-api-spec:${elasticsearch.version}</resourceBundle>
-                        </resourceBundles>
-                        <outputDirectory>${elasticsearch.tools.directory}</outputDirectory>
-                        <attachToMain>false</attachToMain>
-                        <attachToTest>false</attachToTest>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>process</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -895,66 +862,6 @@
                             <goals>
                                 <goal>check</goal>
                             </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>de.thetaphi</groupId>
-                    <artifactId>forbiddenapis</artifactId>
-                    <version>2.0</version>
-
-                    <executions>
-                        <execution>
-                            <id>check-forbidden-apis</id>
-                                <configuration>
-                                     <targetVersion>${maven.compiler.target}</targetVersion>
-                                     <!-- disallow undocumented classes like sun.misc.Unsafe: -->
-                                     <internalRuntimeForbidden>true</internalRuntimeForbidden>
-                                     <!-- if the used Java version is too new, don't fail, just do nothing: -->
-                                     <failOnUnsupportedJava>false</failOnUnsupportedJava>
-                                     <bundledSignatures>
-                                         <!-- This will automatically choose the right signatures based on 'targetVersion': -->
-                                         <bundledSignature>jdk-unsafe</bundledSignature>
-                                         <bundledSignature>jdk-deprecated</bundledSignature>
-                                         <bundledSignature>jdk-system-out</bundledSignature>
-                                     </bundledSignatures>
-                                     <signaturesFiles>
-                                          <signaturesFile>${elasticsearch.tools.directory}/forbidden/core-signatures.txt</signaturesFile>
-                                          <signaturesFile>${elasticsearch.tools.directory}/forbidden/all-signatures.txt</signaturesFile>
-                                          <signaturesFile>${elasticsearch.tools.directory}/forbidden/third-party-signatures.txt</signaturesFile>
-                                     </signaturesFiles>
-                                     <signatures>${forbidden.signatures}</signatures>
-                                     <suppressAnnotations><annotation>**.SuppressForbidden</annotation></suppressAnnotations>
-                                 </configuration>
-                             <phase>compile</phase>
-                             <goals>
-                                 <goal>check</goal>
-                             </goals>
-                         </execution>
-                         <execution>
-                             <id>check-forbidden-test-apis</id>
-                             <configuration>
-                                 <targetVersion>${maven.compiler.target}</targetVersion>
-                                 <!-- disallow undocumented classes like sun.misc.Unsafe: -->
-                                 <internalRuntimeForbidden>true</internalRuntimeForbidden>
-                                 <!-- if the used Java version is too new, don't fail, just do nothing: -->
-                                 <failOnUnsupportedJava>false</failOnUnsupportedJava>
-                                 <bundledSignatures>
-                                     <!-- This will automatically choose the right signatures based on 'targetVersion': -->
-                                     <bundledSignature>jdk-unsafe</bundledSignature>
-                                     <bundledSignature>jdk-deprecated</bundledSignature>
-                                 </bundledSignatures>
-                                 <signaturesFiles>
-                                     <signaturesFile>${elasticsearch.tools.directory}/forbidden/test-signatures.txt</signaturesFile>
-                                     <signaturesFile>${elasticsearch.tools.directory}/forbidden/all-signatures.txt</signaturesFile>
-                                 </signaturesFiles>
-                                 <signatures>${forbidden.test.signatures}</signatures>
-                                 <suppressAnnotations><annotation>**.SuppressForbidden</annotation></suppressAnnotations>
-                             </configuration>
-                             <phase>test-compile</phase>
-                             <goals>
-                                 <goal>testCheck</goal>
-                             </goals>
                         </execution>
                     </executions>
                 </plugin>
@@ -1284,28 +1191,6 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                                 <goal>run</goal>
                             </goals>
                         </execution>
-                        <execution>
-                            <id>check-license</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <skip>${skip.integ.tests}</skip>
-                                <target>
-                                    <echo taskName="license check">Running license check</echo>
-                                    <!-- don't run on windows, because everyone hates it -->
-                                    <exec failonerror="true" executable="perl" osfamily="unix"
-                                          dir="${elasticsearch.tools.directory}/license-check">
-                                        <arg value="check_license_and_sha.pl"/>
-                                        <arg value="--check"/>
-                                        <arg value="${project.licenses.dir}"/>
-                                        <arg value="${project.licenses.check_target}"/>
-                                        <arg value="${project.licenses.ignore}"/>
-                                    </exec>
-                                </target>
-                            </configuration>
-                        </execution>
                     </executions>
                     <dependencies>
                         <dependency>
@@ -1349,14 +1234,6 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <build>
-                <plugins>
-                   <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                   </plugin>
-                </plugins>
-            </build>
         </profile>
         <profile>
             <id>release</id>
@@ -1439,16 +1316,6 @@ org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UT
                             </execution>
                             <execution>
                                 <id>check-forbidden-test-apis</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.mycila</groupId>
-                        <artifactId>license-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>check-license-headers</id>
                                 <phase>none</phase>
                             </execution>
                         </executions>
